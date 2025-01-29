@@ -5,4 +5,4 @@ A quick sql intro
 
 Start [here](CommandLine_duckdb.md).
 
-See R example for AA frequency PCA plots [explore_AA_freq.R](R-core/explore_AA_freq.R)
+See R example for AA frequency PCA plots [explore_AA_freq.R](R-code/explore_AA_freq.R)
