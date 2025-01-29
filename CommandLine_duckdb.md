@@ -4,6 +4,7 @@ We can use some basic Shell and SQL tools to build and query a database.
 
 I started a dataset for the Fungi5k exploration project. Here I put files in the [data](data) folder. These are CSV files.
 * [samples.csv.gz](data/samples.csv.gz) - this is the metadata about each genome in the project. The columns are relatively explanatory and first line of file is a header.
+* [asm_stats.csv.gz](data/asm_stats.csv.gz) - Genome assembly stats
 * [aa_freq.csv.gz](data/aa_freq.csv.gz) - this is computed amino acid usage frequency for each organism, the `species_prefix` is the code that can be linked to samples.csv `LOCUSTAG` column
 * [species_funguild.csv.gz](data/species_funguild.csv.gz) - this is the funguild imputed ecology or guild for the organisms which could be assigned (or sometimes it is transferred from the genus assignment)
 
@@ -44,6 +45,9 @@ duckdb -c "CREATE INDEX IF NOT EXISTS idx_aa_locustag ON aa_frequency(species_pr
 duckdb -c "CREATE TABLE IF NOT EXISTS funguild AS SELECT * FROM read_csv_auto('data/species_funguild.csv.gz')" fungigenomeDB.duckdb
 duckdb -c "CREATE INDEX IF NOT EXISTS idx_funguild_locustag ON funguild(species_prefix)" fungigenomeDB.duckdb
 
+# build asm stats table
+duckdb -c "CREATE TABLE IF NOT EXISTS asm_stats AS SELECT * FROM read_csv_auto('data/asm_stats.csv.gz')" fungigenomeDB.duckdb
+duckdb -c "CREATE INDEX IF NOT EXISTS idx_asmstats_locustag ON asm_stats(LOCUSTAG)" fungigenomeDB.duckdb
 ```
 
 Now let's query funguild first by doing a JOIN using the WHERE clause.
